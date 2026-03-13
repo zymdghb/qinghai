@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大美青海</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D5A4A;
+            --primary-light: #4A7C6B;
+            --accent: #C9A962;
+            --bg: #F5F2EB;
+            --bg-dark: #1A1A1A;
+            --text: #2C2C2C;
+            --text-light: #F5F5F5;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(135deg, rgba(45,90,74,0.85) 0%, rgba(26,26,26,0.75) 100%),
+                url('https://pic.sogou.com/pics/json.jsp?query=%E9%92%A1%E8%BF%9E%E5%B1%B1%E8%8D%89%E5%8E%9F&st=5&start=0&xml_len=60&queryType=pic&piclensId=0_0_0_0_0_1&down=0');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--text-light);
+            padding: 2rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 700;
+            letter-spacing: 0.4em;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.9;
+            letter-spacing: 0.3em;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .scroll-hint span {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            opacity: 0.9;
+        }
+
+        .enter-btn {
+            margin-top: 2rem;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            background: var(--accent);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .enter-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(201, 169, 98, 0.4);
+        }
+
+        /* Map Section */
+        .map-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, #E8F4F0 0%, #D4E8E0 100%);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: #666;
+        }
+
+        /* SVG Map */
+        .map-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .qinghai-svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .region-path {
+            fill: var(--primary-light);
+            stroke: white;
+            stroke-width: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .region-path:hover {
+            fill: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .region-label {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 12px;
+            fill: white;
+            pointer-events: none;
+            font-weight: 500;
+        }
+
+        .region-label-en {
+            font-size: 9px;
+            fill: rgba(255,255,255,0.8);
+        }
+
+        /* Admin Button */
+        .admin-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 50;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            border-radius: 24px;
+            max-width: 1000px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .modal-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+        }
+
+        .modal-title {
+            position: absolute;
+            bottom: 2rem;
+            left: 2.5rem;
+            color: white;
+            z-index: 1;
+        }
+
+        .modal-title h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .modal-title p {
+            font-size: 1.1rem;
+            opacity: 0.85;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2.5rem;
+        }
+
+        .modal-intro {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #333;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .photo-item {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .photo-caption {
+            padding: 1rem;
+            font-size: 0.95rem;
+            color: #555;
+            background: #fafafa;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        @media (max-width: 768px) {
+            .modal-header { height: 250px; }
+            .modal-title h2 { font-size: 2rem; }
+            .modal-title { left: 1.5rem; bottom: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1>青海</h1>
+            <p>三江之源 · 高原明珠</p>
+            <button class="enter-btn" onclick="scrollToMap()">开始探索</button>
+        </div>
+        <div class="scroll-hint" onclick="scrollToMap()">
+            <span>探索各州</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section" id="map">
+        <div class="section-title">
+            <h2>青海省地图</h2>
+            <p>点击下方州县，探索各地风情</p>
+        </div>
+        
+        <div class="map-container">
+            <svg class="qinghai-svg" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- 青海省轮廓 (简化) -->
+                <path class="region-path" data-region="xining" d="M200,80 L280,70 L340,90 L360,140 L340,200 L300,260 L240,280 L180,260 L140,200 L160,140 Z" fill="#4A7C6B"/>
+                <path class="region-path" data-region="haidong" d="M160,140 L200,80 L220,100 L200,160 L160,180 Z" fill="#5A8C7B"/>
+                <path class="region-path" data-region="haibei" d="M200,80 L280,70 L300,100 L260,120 L220,100 Z" fill="#3A6C5B"/>
+                <path class="region-path" data-region="huangnan" d="M280,70 L340,90 L360,140 L320,180 L260,160 L260,120 Z" fill="#6A9C8B"/>
+                <path class="region-path" data-region="hainan" d="M260,160 L320,180 L340,200 L300,260 L240,280 L260,200 Z" fill="#4B7D6C"/>
+                <path class="region-path" data-region="guluo" d="M300,260 L340,200 L360,260 L340,320 L280,340 L260,280 Z" fill="#5B8D7C"/>
+                <path class="region-path" data-region="yushu" d="M260,280 L280,340 L260,380 L180,360 L160,300 L240,280 Z" fill="#3B7D5B"/>
+                <path class="region-path" data-region="haixi" d="M140,200 L180,260 L240,280 L160,300 L100,260 L80,200 L100,140 L160,140 Z" fill="#6B9D8B"/>
+                
+                <!-- 州县标签 -->
+                <text x="190" y="150" class="region-label">西宁</text>
+                <text x="175" y="115" class="region-label-en">Xining</text>
+                
+                <text x="130" y="165" class="region-label">海东</text>
+                <text x="125" y="135" class="region-label-en">Haidong</text>
+                
+                <text x="240" y="85" class="region-label">海北</text>
+                <text x="235" y="70" class="region-label-en">Haibei</text>
+                
+                <text x="300" y="130" class="region-label">黄南</text>
+                <text x="295" y="115" class="region-label-en">Huangnan</text>
+                
+                <text x="280" y="220" class="region-label">海南</text>
+                <text x="275" y="205" class="region-label-en">Hainan</text>
+                
+                <text x="310" y="290" class="region-label">果洛</text>
+                <text x="305" y="275" class="region-label-en">Guluo</text>
+                
+                <text x="210" y="330" class="region-label">玉树</text>
+                <text x="205" y="315" class="region-label-en">Yushu</text>
+                
+                <text x="130" y="230" class="region-label">海西</text>
+                <text x="125" y="215" class="region-label-en">Haixi</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <div class="modal-header">
+                <img id="modalCover" src="" alt="">
+                <div class="modal-title">
+                    <h2 id="modalTitle"></h2>
+                    <p id="modalSubtitle"></p>
+                </div>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-intro" id="modalIntro"></p>
+                <div class="photo-gallery" id="photoGallery"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Button -->
+    <button class="admin-btn" onclick="location.href='admin.html'">⚙</button>
+
+    <script>
+        // 地区数据
+        let regionData = {
+            xining: {
+                name: '西宁市',
+                subtitle: '青海省省会',
+                cover: 'https://images.unsplash.com/photo-1564966188798-7c1e4e5a3c2d?w=800',
+                intro: '西宁市是青海省的省会，位于青藏高原东北部，素有"西海锁钥"之称。作为西北地区重要的中心城市，西宁是前往青海湖、塔尔寺等著名景点的中转枢纽。',
+                photos: [
+                    { url: 'https://images.unsplash.com/photo-1564966188798-7c1e4e5a3c2d?w=400', caption: '塔尔寺' },
+                    { url: 'https://images.unsplash.com/photo-1580978458576-1a1a7a8e5e8c?w=400', caption: '青海省博物馆' }
+                ]
+            },
+            haidong: {
+                name: '海东市',
+                subtitle: '河湟谷地',
+                cover: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800',
+                intro: '海东市位于青海省东北部，是青海省的东大门。地处黄河、湟水河流域，海拔较低，气候温和。',
+                photos: [
+                    { url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400', caption: '互助土族风情园' }
+                ]
+            },
+            haibei: {
+                name: '海北藏族自治州',
+                subtitle: '金银滩草原',
+                cover: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+                intro: '海北藏族自治州位于青海省东北部，因位于青海湖以北而得名。这里有著名的金银滩草原。',
+                photos: [
+                    { url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400', caption: '金银滩草原' }
+                ]
+            },
+            huangnan: {
+                name: '黄南藏族自治州',
+                subtitle: '热贡艺术之乡',
+                cover: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800',
+                intro: '黄南藏族自治州位于青海省东南部，是著名的"热贡艺术"发源地。',
+                photos: [
+                    { url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400', caption: '热贡唐卡' }
+                ]
+            },
+            hainan: {
+                name: '海南藏族自治州',
+                subtitle: '青海湖所在地',
+                cover: 'https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=800',
+                intro: '海南藏族自治州因位于青海湖以南而得名，是中国最美的湖泊——青海湖的主要所在地。',
+                photos: [
+                    { url: 'https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=400', caption: '青海湖' }
+                ]
+            },
+            guluo: {
+                name: '果洛藏族自治州',
+                subtitle: '格萨尔王故里',
+                cover: 'https://images.unsplash.com/photo-1520962889616-a5682ae8058c?w=800',
+                intro: '果洛藏族自治州位于青藏高原腹地，是著名的格萨尔王史诗流传地。',
+                photos: [
+                    { url: 'https://images.unsplash.com/photo-1520962889616-a5682ae8058c?w=400', caption: '年保玉则' }
+                ]
+            },
+            yushu: {
+                name: '玉树藏族自治州',
+                subtitle: '康巴藏族文化中心',
+                cover: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800',
+                intro: '玉树藏族自治州位于青海省南部，是长江、黄河、澜沧江的发源地，被誉为"中华水塔"。',
+                photos: [
+                    { url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400', caption: '三江源' }
+                ]
+            },
+            haixi: {
+                name: '海西蒙古族藏族自治州',
+                subtitle: '柴达木盆地',
+                cover: 'https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=800',
+                intro: '海西蒙古族藏族自治州位于青海省西部，是青海省面积最大的自治州。',
+                photos: [
+                    { url: 'https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=400', caption: '茶卡盐湖' }
+                ]
+            }
+        };
+
+        // 加载数据
+        function loadData() {
+            const saved = localStorage.getItem('qinghai_data');
+            if (saved) {
+                regionData = JSON.parse(saved);
+            }
+        }
+
+        // 初始化地图点击
+        function initMap() {
+            document.querySelectorAll('.region-path').forEach(path => {
+                path.addEventListener('click', () => {
+                    const regionId = path.dataset.region;
+                    openModal(regionId);
+                });
+            });
+        }
+
+        // 打开弹窗
+        function openModal(regionId) {
+            const data = regionData[regionId];
+            if (!data) return;
+            
+            document.getElementById('modalCover').src = data.cover;
+            document.getElementById('modalTitle').textContent = data.name;
+            document.getElementById('modalSubtitle').textContent = data.subtitle;
+            document.getElementById('modalIntro').textContent = data.intro;
+            
+            const gallery = document.getElementById('photoGallery');
+            gallery.innerHTML = data.photos.map(photo => `
+                <div class="photo-item">
+                    <img src="${photo.url}" alt="${photo.caption}">
+                    <div class="photo-caption">${photo.caption}</div>
+                </div>
+            `).join('');
+            
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭弹窗
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        function scrollToMap() {
+            document.getElementById('map').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        loadData();
+        initMap();
+    </script>
+</body>
+</html>
