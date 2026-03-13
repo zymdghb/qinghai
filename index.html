@@ -385,41 +385,57 @@
         </div>
         
         <div class="map-container">
-            <svg class="qinghai-svg" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
-                <!-- 青海省轮廓 (简化) -->
-                <path class="region-path" data-region="xining" d="M200,80 L280,70 L340,90 L360,140 L340,200 L300,260 L240,280 L180,260 L140,200 L160,140 Z" fill="#4A7C6B"/>
-                <path class="region-path" data-region="haidong" d="M160,140 L200,80 L220,100 L200,160 L160,180 Z" fill="#5A8C7B"/>
-                <path class="region-path" data-region="haibei" d="M200,80 L280,70 L300,100 L260,120 L220,100 Z" fill="#3A6C5B"/>
-                <path class="region-path" data-region="huangnan" d="M280,70 L340,90 L360,140 L320,180 L260,160 L260,120 Z" fill="#6A9C8B"/>
-                <path class="region-path" data-region="hainan" d="M260,160 L320,180 L340,200 L300,260 L240,280 L260,200 Z" fill="#4B7D6C"/>
-                <path class="region-path" data-region="guluo" d="M300,260 L340,200 L360,260 L340,320 L280,340 L260,280 Z" fill="#5B8D7C"/>
-                <path class="region-path" data-region="yushu" d="M260,280 L280,340 L260,380 L180,360 L160,300 L240,280 Z" fill="#3B7D5B"/>
-                <path class="region-path" data-region="haixi" d="M140,200 L180,260 L240,280 L160,300 L100,260 L80,200 L100,140 L160,140 Z" fill="#6B9D8B"/>
+            <svg class="qinghai-svg" viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- 青海省真实形状 - 8个州县 -->
+                
+                <!-- 海西蒙古族藏族自治州 (西部大面积) -->
+                <path class="region-path" data-region="haixi" d="M60,120 L100,80 L180,60 L260,50 L320,70 L340,100 L360,140 L380,180 L360,220 L320,240 L260,250 L200,260 L140,280 L80,260 L40,220 L30,160 L40,120 Z" fill="#5A8C7B"/>
+                
+                <!-- 玉树藏族自治州 (南部) -->
+                <path class="region-path" data-region="yushu" d="M200,260 L260,250 L320,240 L360,280 L380,340 L360,400 L300,440 L220,450 L160,420 L140,360 L160,300 Z" fill="#4A7C6B"/>
+                
+                <!-- 果洛藏族自治州 (东南部) -->
+                <path class="region-path" data-region="guluo" d="M320,240 L360,220 L380,260 L400,300 L380,340 L360,280 Z" fill="#3A6C5B"/>
+                
+                <!-- 海南藏族自治州 (青海湖区域) -->
+                <path class="region-path" data-region="hainan" d="M260,250 L320,240 L360,280 L380,260 L380,180 L360,140 L320,150 L280,180 L260,220 Z" fill="#6A9C8B"/>
+                
+                <!-- 黄南藏族自治州 (东部) -->
+                <path class="region-path" data-region="huangnan" d="M320,150 L360,140 L380,180 L400,200 L400,240 L380,260 L360,220 Z" fill="#4B7D6C"/>
+                
+                <!-- 海北藏族自治州 (东北部) -->
+                <path class="region-path" data-region="haibei" d="M260,50 L320,70 L340,100 L360,140 L320,150 L280,180 L240,140 L220,100 Z" fill="#5B8D7C"/>
+                
+                <!-- 西宁市 (东部) -->
+                <path class="region-path" data-region="xining" d="M280,180 L320,150 L360,140 L360,180 L340,200 L320,180 Z" fill="#2D5A4A"/>
+                
+                <!-- 海东市 (最东) -->
+                <path class="region-path" data-region="haidong" d="M320,180 L340,200 L360,220 L380,260 L400,240 L400,200 L380,180 Z" fill="#3B7D5B"/>
                 
                 <!-- 州县标签 -->
-                <text x="190" y="150" class="region-label">西宁</text>
-                <text x="175" y="115" class="region-label-en">Xining</text>
+                <text x="180" y="180" class="region-label">海西</text>
+                <text x="170" y="165" class="region-label-en">Haixi</text>
                 
-                <text x="130" y="165" class="region-label">海东</text>
-                <text x="125" y="135" class="region-label-en">Haidong</text>
+                <text x="250" y="350" class="region-label">玉树</text>
+                <text x="245" y="335" class="region-label-en">Yushu</text>
                 
-                <text x="240" y="85" class="region-label">海北</text>
-                <text x="235" y="70" class="region-label-en">Haibei</text>
+                <text x="355" y="280" class="region-label">果洛</text>
+                <text x="350" y="265" class="region-label-en">Guluo</text>
                 
-                <text x="300" y="130" class="region-label">黄南</text>
-                <text x="295" y="115" class="region-label-en">Huangnan</text>
+                <text x="300" y="200" class="region-label">海南</text>
+                <text x="295" y="185" class="region-label-en">Hainan</text>
                 
-                <text x="280" y="220" class="region-label">海南</text>
-                <text x="275" y="205" class="region-label-en">Hainan</text>
+                <text x="370" y="190" class="region-label">黄南</text>
+                <text x="365" y="175" class="region-label-en">Huangnan</text>
                 
-                <text x="310" y="290" class="region-label">果洛</text>
-                <text x="305" y="275" class="region-label-en">Guluo</text>
+                <text x="280" y="100" class="region-label">海北</text>
+                <text x="275" y="85" class="region-label-en">Haibei</text>
                 
-                <text x="210" y="330" class="region-label">玉树</text>
-                <text x="205" y="315" class="region-label-en">Yushu</text>
+                <text x="310" y="165" class="region-label">西宁</text>
+                <text x="305" y="150" class="region-label-en">Xining</text>
                 
-                <text x="130" y="230" class="region-label">海西</text>
-                <text x="125" y="215" class="region-label-en">Haixi</text>
+                <text x="375" y="220" class="region-label">海东</text>
+                <text x="370" y="205" class="region-label-en">Haidong</text>
             </svg>
         </div>
     </section>
